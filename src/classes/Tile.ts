@@ -1,12 +1,12 @@
 import { GameObject } from "./GameObject"
 
 export class Tile extends GameObject {
-	private cellSize: number;
-	private color: string;
-	private strokeColor: string;
+	cellSize: number;
+	color: string;
+	strokeColor: string;
 
-	constructor(x: number, y: number, color: string, strokeColor: string, cellSize: number) {
-		super(x,y);
+	constructor(x: number, y: number, cellSize: number, color: string, strokeColor: string) {
+		super(x,y, cellSize);
 		this.color = color;
 		this.cellSize = cellSize;
 		this.strokeColor = strokeColor;

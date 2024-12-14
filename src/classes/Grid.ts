@@ -27,7 +27,7 @@ export class Grid {
 			for(let col = 0; col < this.cols; col++) {
 				let currentCell = this.cells[row][col]
 				// x, y, color, strokeColor, size
-				let newTile = new Tile(row * this.cellSize, col * this.cellSize, '#D2B48C', '#8B4513', this.cellSize);
+				let newTile = new Tile(row * this.cellSize, col * this.cellSize, this.cellSize, '#D2B48C', '#8B4513');
 				this.gameManager.addGameObject(newTile);
 				currentCell.push(newTile);
 			}

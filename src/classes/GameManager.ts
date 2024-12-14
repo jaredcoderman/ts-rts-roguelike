@@ -1,7 +1,6 @@
 import { GameObject } from "./GameObject";
 import { Unit } from "./Unit"
 import { Grid } from "./Grid"
-import { InputManager } from "./InputManager"
 
 export class GameManager {
 	private canvas: HTMLCanvasElement;
@@ -11,7 +10,6 @@ export class GameManager {
 	private static instance: GameManager;
 	private cellSize: number = 20;
 	private grid: Grid | undefined;
-	private inputManager: InputManager | undefined;
 	constructor(canvas: HTMLCanvasElement) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d")!;
@@ -27,7 +25,7 @@ export class GameManager {
 			GameManager.instance = new GameManager(canvas);
 		}
 		return GameManager.instance;
-	}
+	}	
 
 	public init() {
 		// Set the size
@@ -41,9 +39,9 @@ export class GameManager {
 		this.grid.drawGrid();
 
 		// Make units
-	
-		// Init input
-		this.inputManager = new InputManager();
+		let u = new Unit(300, 500, 20, 0, "black");
+		this.addGameObject(u);
+
 
 		// request animation frame here
 		requestAnimationFrame(this.loop.bind(this));
@@ -57,12 +55,17 @@ export class GameManager {
 		gameObjects.forEach(gameObject => this.addGameObject(gameObject));
 	}
 
+	public getGameObjects(): GameObject[] {
+		return this.gameObjects;
+	}
+
 	public removeGameObject(gameObject: GameObject) {
 		const index = this.gameObjects.indexOf(gameObject);
 		if (index > -1) {
 			this.gameObjects.splice(index, 1);
 		}
 	}
+
 
 	private loop(timestamp: number) {
 		const delta = timestamp - this.lastTimeStamp;

@@ -39,8 +39,8 @@ export class Unit extends GameObject {
 	moveTowards(delta: number) {
 		if(!this.targetPosition) return;
 		const direction = new Vector2(
-                this.targetPosition.x - this.x,
-                this.targetPosition.y - this.y
+                this.targetPosition.x - (this.x + (this.size / 2)),
+                this.targetPosition.y - (this.y + (this.size / 2))
     	);
    		const distance = direction.magnitude();
 		

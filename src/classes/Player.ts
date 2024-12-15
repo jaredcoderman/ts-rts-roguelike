@@ -5,7 +5,7 @@ import { Unit } from "./Unit";
 export class Player {
 	private static instance: Player;
 	private gameManager: GameManager;
-	clickBuffer: number = 10;
+	clickBuffer: number = 8;
 
 	// @ts-ignore for now
 	private selected: GameObject | undefined;
@@ -48,6 +48,7 @@ export class Player {
 			} else {
 				this.command(x, y);	
 			}
+			//this.gameManager.addGameObject(new Unit(x, y, 1, 0, "black"));
 		});
 
 		window.addEventListener("mouseup", (_event) => {

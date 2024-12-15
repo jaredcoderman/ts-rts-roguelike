@@ -8,9 +8,9 @@ export class GameObject {
 		this.size = size;
 	}
 
-//	update(delta: number) {
-//		// Updates the object state
-//	}
+	update(_delta: number) {
+		// Updates the object state
+	}
 
 	containsPoint(x: number, y:number): boolean {
 		return x >= this.x && x <= this.x + this.size && this.y >= y && this.y <= this.y + this.size;

@@ -7,9 +7,9 @@ export class GameManager {
 	private ctx: CanvasRenderingContext2D;
 	private gameObjects: GameObject[];
 	private lastTimeStamp: number;
-	private static instance: GameManager;
+	public static instance: GameManager;
 	private cellSize: number = 20;
-	private grid: Grid | undefined;
+	grid: Grid | undefined;
 	constructor(canvas: HTMLCanvasElement) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d")!;

@@ -11,9 +11,9 @@ export class Unit extends GameObject {
 		this.selectable = true;
 	}
 
-//	update(delta: number) {
-//			
-//	}
+	update(_delta: number) {
+			
+	}
 
 	setColor(color: string) {
 		this.color = color;

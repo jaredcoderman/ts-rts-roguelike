@@ -16,4 +16,18 @@ describe("Grid class", () => {
 			expect(grid["cells"][0].length).toBe(grid["cols"]);
 		});
 	});
+
+	describe("drawGrid", () => {
+		it("should run without error", () => {
+			let canvas = document.createElement("canvas");
+			canvas.width = 300;
+			canvas.height = 200;
+
+			GameManager.getInstance(canvas);
+			
+			let grid = new Grid(10,10, 20);
+			grid.drawGrid();
+			expect(grid["cells"][0].length).not.toBe(0);
+		});
+	});
 });

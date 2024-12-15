@@ -14,7 +14,7 @@
 [X] Tile
 [X] GameObject
 [X] GameManager
-[ ] Grid
+[X] Grid
 [ ] Player
 
 # Tiles

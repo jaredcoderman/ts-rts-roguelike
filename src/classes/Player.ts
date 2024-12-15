@@ -4,6 +4,7 @@ import { GameObject } from "./GameObject";
 export class Player {
 	private static instance: Player;
 	private gameManager: GameManager;
+	// @ts-ignore for now
 	private selected: GameObject;
 	constructor() {
 		this.initListeners();
@@ -25,7 +26,7 @@ export class Player {
 			this.select(x, y);
 		});
 
-		window.addEventListener("mouseup", (event) => {
+		window.addEventListener("mouseup", (_event) => {
 			console.log("mouseup");
 		});
 	}

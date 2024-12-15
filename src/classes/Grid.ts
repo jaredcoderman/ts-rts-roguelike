@@ -7,7 +7,7 @@ type Cell = GameObject[];
 export class Grid {
 	private rows: number;
 	private cols: number;
-	private cellSize: number = 20;
+	private cellSize: number;
 	private cells: Cell[][];
 	private gameManager: GameManager;
 

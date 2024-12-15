@@ -13,9 +13,9 @@ export class GameObject {
 	}
 
 	containsPoint(x: number, y:number): boolean {
-		return x >= this.x && x <= this.x + this.size && this.y >= y && this.y <= this.y + this.size;
+		return x >= this.x && x <= this.x + this.size &&
+			y >= this.y && y <= this.y + this.size;
 	};
-
 
 	render(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = "blue";

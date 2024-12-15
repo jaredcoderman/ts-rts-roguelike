@@ -1,6 +1,7 @@
 import { GameObject } from "./GameObject";
 import { Unit } from "./Unit"
 import { Grid } from "./Grid"
+import { Player } from "./Player";
 
 export class GameManager {
 	private canvas: HTMLCanvasElement;
@@ -29,9 +30,8 @@ export class GameManager {
 
 	public init() {
 		// Set the size
-		this.canvas.width = window.innerWidth - 20;
-		this.canvas.height = window.innerHeight - 20;
-		
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight
 		// Create the grid
 		let rows = Math.floor(this.canvas.width / this.cellSize);
 		let cols = Math.floor(this.canvas.height / this.cellSize);
@@ -39,10 +39,13 @@ export class GameManager {
 		this.grid.drawGrid();
 
 		// Make units
-		let u = new Unit(300, 500, 20, 0, "black");
-		this.addGameObject(u);
+		let u = new Unit(300, 500, 20, 60, "black");
+		let u2 = new Unit(200, 200, 20, 60, "black");
+		this.addGameObjects([u, u2]);
 
-
+		// Init player
+		Player.getInstance();
+		
 		// request animation frame here
 		requestAnimationFrame(this.loop.bind(this));
 	}
@@ -68,7 +71,7 @@ export class GameManager {
 
 
 	private loop(timestamp: number) {
-		const delta = timestamp - this.lastTimeStamp;
+		const delta = (timestamp - this.lastTimeStamp) / 1000;
 		this.lastTimeStamp = timestamp;
 
 		// Process game logic
@@ -88,6 +91,8 @@ export class GameManager {
 	private render() {
 		// Clear the canvas
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.fillStyle = '#D2B48C';
+		this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);	
 			
 		// Render game objects
 		this.gameObjects.forEach(gameObject => gameObject.render(this.ctx));		

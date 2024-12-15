@@ -1,12 +1,11 @@
 # Plan
 
 [X] Make GameManager a singleton
-[/] Testing
-[/] Tiles
-[ ] Make unit movement update their current cell
+[X] Testing
+[X] Tiles
+[X] Movement 
 [ ] Make Structure class
 [ ] Make units selectable
-[ ] Make units moveable
 [ ] Make Resource class
 
 # Testing
@@ -15,10 +14,16 @@
 [X] GameObject
 [X] GameManager
 [X] Grid
-[ ] Player
+[X] Player
 
 # Tiles
 - Requirements
  [X] Fills screen with a bunch of tiles
- [ ] On click can get tile data
+ [X] On click can get tile data
 
+# Movement
+
+- Requirements
+ [ ] Give units a LookVector,
+ [ ] When selected and commanded have them rotate towards clicked point
+ [ ] Tween towards clicked point

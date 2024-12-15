@@ -2,6 +2,11 @@ import { GameObject } from "./GameObject";
 import { Unit } from "./Unit"
 import { Grid } from "./Grid"
 import { Player } from "./Player";
+import { Structure } from "./Structure";
+import { Resource } from "./Resource";
+import { Vector2 } from "../utils/Vector";
+import { Collector } from "./Collector";
+import { Base } from "./Base";
 
 export class GameManager {
 	private canvas: HTMLCanvasElement;
@@ -39,15 +44,44 @@ export class GameManager {
 		this.grid.drawGrid();
 
 		// Make units
-		let u = new Unit(300, 500, 20, 60, "black");
-		let u2 = new Unit(200, 200, 20, 60, "black");
-		this.addGameObjects([u, u2]);
+		let u = new Collector(300, 500, 20, 60, "black", 3);
+		let u2 = new Collector(200, 200, 20, 60, "black", 3);
+		let b = new Base(40, 40, 35, "black", 100);
+		
+		let r = new Resource(400, 500, 20, "green", 20);
+		let r2 = new Resource(400, 520, 20, "green", 20);
+		let r3 = new Resource(420, 500, 20, "green", 20);
+		let r4 = new Resource(400, 540, 20, "green", 20);
+		let r5 = new Resource(440, 560, 20, "green", 20);
+		let r6 = new Resource(420, 540, 20, "green", 20);
+		this.addGameObjects([u, u2, b, r, r2, r3, r4, r5, r6]);
 
 		// Init player
 		Player.getInstance();
 		
 		// request animation frame here
 		requestAnimationFrame(this.loop.bind(this));
+	}
+
+	findClosestOfType<T extends GameObject>(
+		obj: GameObject,
+		type: new (...args: any[]) => T): GameObject | void {
+		const objectsOfType = this.gameObjects.filter(gameObject => gameObject instanceof type);
+		let closestDistance = Infinity;
+		let closestObj = objectsOfType[0];
+		objectsOfType.forEach(object => {
+			if(obj.distanceTo(object) < closestDistance) {
+				closestDistance = obj.distanceTo(object);
+				closestObj = object;
+			}
+		});
+		return closestObj;
+	}
+
+	queryResources(point: Vector2): Resource | undefined {
+		const resources = this.gameObjects.filter(gameObject => gameObject instanceof Resource);
+		let resourceOnPoint = resources.find(resource => resource.containsPoint(point));
+		return resourceOnPoint;
 	}
 
 	public addGameObject(gameObject: GameObject) {

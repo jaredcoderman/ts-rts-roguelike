@@ -4,26 +4,12 @@
 [X] Testing
 [X] Tiles
 [X] Movement 
-[ ] Make Structure class
-[ ] Make units selectable
-[ ] Make Resource class
+[X] Make Structure class
+[X] Make units selectable
+[X] Make Resource class
 
-# Testing
-[X] Unit
-[X] Tile
-[X] GameObject
-[X] GameManager
-[X] Grid
-[X] Player
+# Resource collection
+[ ] Selecting a unit, then clickign a resource, starts the collection loop
+    [X] Select unit
+    [ ] Select resource
 
-# Tiles
-- Requirements
- [X] Fills screen with a bunch of tiles
- [X] On click can get tile data
-
-# Movement
-
-- Requirements
- [ ] Give units a LookVector,
- [ ] When selected and commanded have them rotate towards clicked point
- [ ] Tween towards clicked point

@@ -1,5 +1,9 @@
+import { Vector2 } from "../utils/Vector";
+import { Collector } from "./Collector";
 import { GameManager } from "./GameManager"
 import { GameObject } from "./GameObject";
+import { Structure } from "./Structure";
+import { Tile } from "./Tile";
 import { Unit } from "./Unit";
 
 export class Player {
@@ -14,28 +18,32 @@ export class Player {
 		this.gameManager = GameManager.getInstance();
 	}
 
-	select(x: number, y: number) {
+	select(point: Vector2) {
 		let gameObjects = this.gameManager.getGameObjects();
-		let gameObject = gameObjects.find(gameObject => gameObject.containsPoint(x, y) && gameObject instanceof Unit);
-		if(gameObject) {
+		let gameObject = gameObjects.find(gameObject => gameObject.containsPoint(point) && !(gameObject instanceof Tile));
+		if(gameObject instanceof Unit || gameObject instanceof Structure) {
 			this.selected = gameObject;
-			if(gameObject instanceof Unit) {
-				gameObject.select();
-				this.selected = gameObject;
-			}
+			gameObject.select();
 		}
 	}
 
 	deselect() {
-		if(this.selected && this.selected instanceof Unit) {
+		if(this.selected && (this.selected instanceof Unit || this.selected instanceof Structure)) {
 			this.selected.deselect();
 		}
 		this.selected = undefined;
 	}
 
-	command(x: number, y: number) {
-		if(this.selected instanceof Unit) {
-			this.selected.setTargetPosition(x, y);		
+	command(point: Vector2) {
+		if(this.selected instanceof Collector) {
+			let resource = this.gameManager.queryResources(point);			
+			if(resource) {
+				this.selected.collect(resource);
+			} else {
+				this.selected.setTargetPosition(point);
+			}
+		} else if(this.selected instanceof Unit ) {
+			this.selected.setTargetPosition(point);		
 		}
 	};
 
@@ -43,16 +51,16 @@ export class Player {
 		window.addEventListener("mousedown", (event) => {
 			const x = event.clientX - this.clickBuffer;
 			const y = event.clientY - this.clickBuffer;
+			const point = new Vector2(x, y);
 			if(this.selected === undefined) {
-				Player.instance.select(x, y);
+				Player.instance.select(point);
 			} else {
-				this.command(x, y);	
+				this.command(point);	
 			}
 			//this.gameManager.addGameObject(new Unit(x, y, 1, 0, "black"));
 		});
 
 		window.addEventListener("mouseup", (_event) => {
-			console.log("mouseup");
 		});
 
 		window.addEventListener("keydown", (event) => {

@@ -32,8 +32,12 @@ export class Unit extends GameObject {
 		this.setColor("black");
 	}
 
-	setTargetPosition(x: number, y: number) {
-		this.targetPosition = new Vector2(x,y);
+	setTargetPosition(position: Vector2) {
+		this.targetPosition = position;
+	}
+
+	resetTarget() {
+		this.targetPosition = null
 	}
 
 	moveTowards(delta: number) {
@@ -56,7 +60,7 @@ export class Unit extends GameObject {
 			this.rotation = this.lookVector.getAngle();
 		} else {
 			// Arrived at the target
-			this.targetPosition = null;
+			this.resetTarget();
 		}	
 	}
 

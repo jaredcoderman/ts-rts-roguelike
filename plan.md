@@ -9,7 +9,7 @@
 [X] Make Resource class
 
 # Resource collection
-[ ] Selecting a unit, then clickign a resource, starts the collection loop
+[X] Selecting a unit, then clickign a resource, starts the collection loop
     [X] Select unit
-    [ ] Select resource
+    [X] Select resource
 

@@ -10,9 +10,8 @@ export class Player {
 	private static instance: Player;
 	private gameManager: GameManager;
 	clickBuffer: number = 8;
-
-	// @ts-ignore for now
 	private selected: GameObject | undefined;
+	
 	constructor() {
 		this.initListeners();
 		this.gameManager = GameManager.getInstance();
@@ -40,6 +39,9 @@ export class Player {
 			if(resource) {
 				this.selected.collect(resource);
 			} else {
+				if(this.selected.collecting) {
+					this.selected.stopCollecting();
+				}
 				this.selected.setTargetPosition(point);
 			}
 		} else if(this.selected instanceof Unit ) {
@@ -57,7 +59,6 @@ export class Player {
 			} else {
 				this.command(point);	
 			}
-			//this.gameManager.addGameObject(new Unit(x, y, 1, 0, "black"));
 		});
 
 		window.addEventListener("mouseup", (_event) => {

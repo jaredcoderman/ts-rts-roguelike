@@ -5,14 +5,12 @@ import { GameObject } from "./GameObject"
 export class Unit extends GameObject {
 	speed: number;
 	selectable: boolean;
-	color: string;
 	lookVector: Vector2;
 	rotation: number;
 	targetPosition: Vector2 | null;
 		
-	constructor(x: number, y: number, size: number, speed: number, color: string) {
-		super(x, y, size);
-		this.color = color; 
+	constructor(x: number, y: number, size: number, speed: number, spriteSrc: string) {
+		super(x, y, size, spriteSrc);
 		this.speed = speed;
 		this.selectable = true;
 		this.rotation = 0;
@@ -21,15 +19,15 @@ export class Unit extends GameObject {
 	}
 
 	update(delta: number) {
-		this.moveTowards(delta);	
+		this.moveTowardsTarget(delta);	
 	}
 	
 	select() {
-		this.setColor("red");
+		console.log("selecting! CHANGE THIS");
 	}
 
 	deselect() {
-		this.setColor("black");
+		console.log("deselecting! CHANGE THIS");
 	}
 
 	setTargetPosition(position: Vector2) {
@@ -40,7 +38,7 @@ export class Unit extends GameObject {
 		this.targetPosition = null
 	}
 
-	moveTowards(delta: number) {
+	moveTowardsTarget(delta: number) {
 		if(!this.targetPosition) return;
 		const direction = new Vector2(
                 this.targetPosition.x - (this.x + (this.size / 2)),
@@ -64,9 +62,6 @@ export class Unit extends GameObject {
 		}	
 	}
 
-	setColor(color: string) {
-		this.color = color;
-	}
 
 	render(ctx: CanvasRenderingContext2D) {
     	// Save the current context state
@@ -82,8 +77,11 @@ export class Unit extends GameObject {
     	ctx.rotate(angle);
 
     	// Draw the rectangle centered at the origin
-    	ctx.fillStyle = this.color;
-    	ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+    	if(this.sprite.complete) {
+			ctx.drawImage(this.sprite, -this.size / 2, -this.size / 2, this.size, this.size);
+		} else {
+			throw new Error("Sprite not complete");
+		}
 	
     	// Restore the context state
     	ctx.restore();

@@ -4,11 +4,14 @@ export class GameObject {
 	x: number;
 	y: number;
 	size: number;
-	
-	constructor(x: number, y: number, size: number) {
+	sprite: HTMLImageElement;
+		
+	constructor(x: number, y: number, size: number, spriteSrc: string) {
 		this.x = x;
 		this.y = y;
 		this.size = size;
+		this.sprite = new Image();
+		this.sprite.src = spriteSrc;
 	}
 
 	update(_delta: number) {
@@ -31,7 +34,12 @@ export class GameObject {
 	}
 
 	render(ctx: CanvasRenderingContext2D) {
-		ctx.fillStyle = "blue";
-		ctx.fillRect(this.x, this.y, 20, 20);
+		if(this.sprite.complete) {
+			ctx.drawImage(this.sprite, this.x, this.y, this.size, this.size);
+		} else {
+			ctx.fillStyle = "blue";
+			ctx.fillRect(this.x, this.y, 20, 20);
+		}
+		
 	}
 }

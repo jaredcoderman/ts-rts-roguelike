@@ -1,4 +1,11 @@
 /* Remove margin and padding */
+@font-face {
+    font-family: 'GameFont';
+    src: url('/fonts/GameFont.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +17,7 @@ html, body {
     width: 100%;
     height: 100%;
 	overflow: hidden; /* Prevent scrollbars */
+	font-family: 'GameFont', sans-serif;
 }
 
 /* Style the canvas to fill the screen */
@@ -19,3 +27,19 @@ canvas {
     height: 100%;
 }
 
+#ui-element {
+	color: red;
+	position: absolute; 
+	top: 50px; 
+	right: 100px;
+	color: black;
+	font-family: 'GameFont', sans-serif;
+	border: 1px solid black;
+	background-color: white;
+	padding: 10px 5px;
+}
+
+#resource-text {
+	margin-left: .5rem;
+	height: 100%;
+}

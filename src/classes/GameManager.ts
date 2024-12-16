@@ -1,8 +1,6 @@
 import { GameObject } from "./GameObject";
-import { Unit } from "./Unit"
 import { Grid } from "./Grid"
 import { Player } from "./Player";
-import { Structure } from "./Structure";
 import { Resource } from "./Resource";
 import { Vector2 } from "../utils/Vector";
 import { Collector } from "./Collector";
@@ -44,18 +42,19 @@ export class GameManager {
 		this.grid.drawGrid();
 
 		// Make units
-		let u = new Collector(300, 500, 20, 60, "black", 3);
-		let u2 = new Collector(200, 200, 20, 60, "black", 3);
-		let b = new Base(40, 40, 35, "black", 100);
+		//
+	//	let g = new GameObject(400, 500, 20, "/Tiles/collector.png");
+		let u = new Collector(300, 500, 20, 60, "Tiles/collector.png", 3);
+		let u2 = new Collector(200, 200, 20, 60, "Tiles/collector.png", 3);
+		let b = new Base(80, 80, 40, "Tiles/base.png", 100);
 		
-		let r = new Resource(400, 500, 20, "green", 20);
-		let r2 = new Resource(400, 520, 20, "green", 20);
-		let r3 = new Resource(420, 500, 20, "green", 20);
-		let r4 = new Resource(400, 540, 20, "green", 20);
-		let r5 = new Resource(440, 560, 20, "green", 20);
-		let r6 = new Resource(420, 540, 20, "green", 20);
+		let r = new Resource(400, 500, 20, "Tiles/resource.png", 23);
+		let r2 = new Resource(400, 520, 20, "Tiles/resource.png", 21);
+		let r3 = new Resource(420, 500, 20, "Tiles/resource.png", 21);
+		let r4 = new Resource(400, 540, 20, "Tiles/resource.png", 21);
+		let r5 = new Resource(440, 560, 20, "Tiles/resource.png", 21);
+		let r6 = new Resource(420, 540, 20, "Tiles/resource.png", 22);
 		this.addGameObjects([u, u2, b, r, r2, r3, r4, r5, r6]);
-
 		// Init player
 		Player.getInstance();
 		
@@ -120,6 +119,7 @@ export class GameManager {
 	private update(delta: number) {
 		// Update game logic here
 		this.gameObjects.forEach(gameObject => gameObject.update(delta));
+		
 	}
 
 	private render() {

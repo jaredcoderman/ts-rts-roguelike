@@ -10,8 +10,9 @@ export class Collector extends Unit {
 	encumbered: boolean = false;
 	collecting: boolean = false;
 	gameManager: GameManager;
-	constructor(x: number, y: number, size: number, speed: number, color: string, collectionTime: number) {
-		super(x, y, size, speed, color);
+
+	constructor(x: number, y: number, size: number, speed: number, spriteSrc: string, collectionTime: number) {
+		super(x, y, size, speed, spriteSrc);
 		this.collectionTime = collectionTime;
 		this.moveTarget = null;
 		this.gameManager = GameManager.getInstance();
@@ -22,9 +23,16 @@ export class Collector extends Unit {
 		this.moveTarget = resource;	
 	}
 
+	stopCollecting() {
+		this.moveTarget = null;
+		this.collecting = false;
+		this.targetPosition = null;
+	}
+
 	resetTarget() {
 		this.targetPosition = null;
 		if(this.moveTarget instanceof Resource && !this.encumbered) {
+			this.moveTarget.deplete(1);
 			this.encumbered = true;
 		}
 		if(this.moveTarget instanceof Base && this.encumbered) {
@@ -54,7 +62,7 @@ export class Collector extends Unit {
 			this.setTargetPosition(this.moveTarget.getPosition());
 		}
 		if(this.targetPosition) {
-			this.moveTowards(delta);
+			this.moveTowardsTarget(delta);
 		}
 
 	}

@@ -10,13 +10,15 @@
 [X] Give player resource amount/max resources
 [X] Have them update when collector collects
 [X] Visual for selected unit1 
-[ ] Collectors find new node after one is depleted
+[X] Collectors find new node after one is depleted
+[ ] Make resources regenerate
+[ ] Collectors takes collectionTime to collect
 [ ] Bases have units
 [ ] Player can spawn units at a base for resource
 
 
 # Bugs
-
+[ ] If resource depleted while collector moving towards it, collector gets stuck.
 [ ] Escape before a unit starts gets to resource (after clicking resource) makes it stop at the resource
 
 

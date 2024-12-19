@@ -57,15 +57,16 @@ export class GameManager {
 		// Make units
 		let u = new Collector(300, 500, 20, 100, "Tiles/collector.png", 3);
 		let u2 = new Collector(200, 200, 20, 100, "Tiles/collector.png", 3);
+		let u3 = new Collector(210, 210, 20, 100, "Tiles/collector.png", 3);
 		let b = new Base(80, 80, 40, "Tiles/base.png", 100);
 		
-		let r = new Resource(400, 500, 20, "Tiles/resource.png", 20);
-		let r2 = new Resource(400, 520, 20, "Tiles/resource.png", 20);
-		let r3 = new Resource(420, 500, 20, "Tiles/resource.png", 20);
-		let r4 = new Resource(400, 540, 20, "Tiles/resource.png", 20);
-		let r5 = new Resource(440, 560, 20, "Tiles/resource.png", 20);
-		let r6 = new Resource(420, 540, 20, "Tiles/resource.png", 20);
-		this.addGameObjects([u, u2, b, r, r2, r3, r4, r5, r6]);
+		let r = new Resource(400, 500, 20, "Tiles/resource.png", 20, 20);
+		let r2 = new Resource(400, 520, 20, "Tiles/resource.png", 20, 20);
+		let r3 = new Resource(420, 500, 20, "Tiles/resource.png", 20, 20);
+		let r4 = new Resource(400, 540, 20, "Tiles/resource.png", 20, 20);
+		let r5 = new Resource(440, 560, 20, "Tiles/resource.png", 20, 20);
+		let r6 = new Resource(420, 540, 20, "Tiles/resource.png", 20, 20);
+		this.addGameObjects([u, u2, u3, b, r, r2, r3, r4, r5, r6]);
 	
 		// Init UI
 		UIManager.getInstance();

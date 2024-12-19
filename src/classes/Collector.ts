@@ -38,6 +38,14 @@ export class Collector extends Unit {
 		}
 	}
 
+	collectNextResource() {
+		this.moveTarget = null;
+		let resource = this.gameManager.findResource(this);
+		if(resource && resource instanceof Resource) {
+			this.collect(resource);
+		}		
+	}
+
 	resetTarget() {
 		this.targetPosition = null;
 		if(this.moveTarget instanceof Resource && !this.encumbered && this.moveTarget.available) {
@@ -46,17 +54,23 @@ export class Collector extends Unit {
 		}
 		if(this.moveTarget instanceof Base && this.encumbered) {
 			this.deposit();
-			let resource = this.gameManager.findResource(this);
-			if(resource && resource instanceof Resource) {
-				this.collect(resource);
-			}		
+			this.collectNextResource();
 		}
 	}
+	
 	update(delta: number) {
 	
 		// When to move to node
-		if(this.collecting && !this.encumbered && this.moveTarget) {
-			this.setTargetPosition(this.moveTarget.getPosition());
+		if(this.collecting && !this.encumbered && this.moveTarget && this.moveTarget) {
+			
+			// If resource is depleted while moving towards it find new one, otherwise
+			// move towards it.
+			if(this.moveTarget instanceof Resource && !this.moveTarget.available) {
+				this.resetTarget();
+				this.collectNextResource();
+			} else {
+				this.setTargetPosition(this.moveTarget.getPosition());
+			}
 		} else 
 		// Move to base
 			if(this.collecting && this.encumbered && !this.targetPosition) {

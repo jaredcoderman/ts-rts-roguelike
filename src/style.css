@@ -13,16 +13,16 @@
 }
 
 /* Set html and body to fill the screen */
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
-	overflow: hidden; /* Prevent scrollbars */
-	font-family: 'GameFont', sans-serif;
+    overflow: hidden; /* Prevent scrollbars */
+    font-family: 'GameFont', sans-serif;
     user-select: none; /* Prevent text selection on the entire page */
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE/Edge */
 }
-
 
 /* Style the canvas to fill the screen */
 canvas {
@@ -32,18 +32,18 @@ canvas {
 }
 
 #ui-element {
-	color: red;
-	position: absolute; 
-	top: 50px; 
-	right: 100px;
-	color: black;
-	font-family: 'GameFont', sans-serif;
-	border: 1px solid black;
-	background-color: white;
-	padding: 10px 5px;
+    color: red;
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    color: black;
+    font-family: 'GameFont', sans-serif;
+    border: 1px solid black;
+    background-color: white;
+    padding: 10px 5px;
 }
 
 #resource-text {
-	margin-left: .5rem;
-	height: 100%;
+    margin-left: 0.5rem;
+    height: 100%;
 }

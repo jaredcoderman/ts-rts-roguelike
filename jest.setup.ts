@@ -1,4 +1,4 @@
-Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
     value: jest.fn(() => ({
         fillRect: jest.fn(),
         clearRect: jest.fn(),
@@ -24,5 +24,4 @@ Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
         strokeText: jest.fn(),
         measureText: jest.fn(() => ({ width: 0 })),
     })),
-});
-
+})

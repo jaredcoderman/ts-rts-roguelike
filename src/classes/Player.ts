@@ -10,7 +10,6 @@ import { Unit } from "./Unit";
 export class Player {
 	private static instance: Player;
 	private gameManager: GameManager;
-	clickBuffer: number = 8;
 	private selected: GameObject | undefined;
 	resources: number;
 	maxResources: number;
@@ -65,8 +64,8 @@ export class Player {
 
 	private initListeners() {
 		window.addEventListener("mousedown", (event) => {
-			const x = event.clientX - this.clickBuffer;
-			const y = event.clientY - this.clickBuffer;
+			const x = event.clientX;
+			const y = event.clientY;
 			const point = new Vector2(x, y);
 			if(this.selected === undefined) {
 				Player.instance.select(point);

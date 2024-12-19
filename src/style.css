@@ -18,7 +18,11 @@ html, body {
     height: 100%;
 	overflow: hidden; /* Prevent scrollbars */
 	font-family: 'GameFont', sans-serif;
+    user-select: none; /* Prevent text selection on the entire page */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE/Edge */
 }
+
 
 /* Style the canvas to fill the screen */
 canvas {

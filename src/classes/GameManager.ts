@@ -119,7 +119,7 @@ export class GameManager {
 
 
 	private loop(timestamp: number) {
-		const delta = (timestamp - this.lastTimeStamp) / 1000;
+		const delta = Math.min((timestamp - this.lastTimeStamp) / 1000, 0.1); // Clamp to 0.1 seconds max
 		this.lastTimeStamp = timestamp;
 
 		// Process game logic

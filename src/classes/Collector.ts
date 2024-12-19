@@ -32,15 +32,17 @@ export class Collector extends Unit {
 	}
 
 	deposit() {
-		this.encumbered = false;	
-		Player.getInstance().addResources(this.collectAmount);
+		if(this.encumbered) {
+			this.encumbered = false;	
+			Player.getInstance().addResources(this.collectAmount);
+		}
 	}
 
 	resetTarget() {
 		console.log("Collector resetting target");
 		this.targetPosition = null;
-		if(this.moveTarget instanceof Resource && !this.encumbered) {
-			this.moveTarget.deplete(1);
+		if(this.moveTarget instanceof Resource && !this.encumbered && this.moveTarget.available) {
+			this.moveTarget.deplete(10);
 			this.encumbered = true;
 		}
 		if(this.moveTarget instanceof Base && this.encumbered) {
@@ -54,7 +56,7 @@ export class Collector extends Unit {
 	update(delta: number) {
 	
 		// When to move to node
-		if(this.collecting && !this.encumbered && !this.targetPosition && this.moveTarget) {
+		if(this.collecting && !this.encumbered && this.moveTarget) {
 			this.setTargetPosition(this.moveTarget.getPosition());
 		} else 
 		// Move to base

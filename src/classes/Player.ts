@@ -28,7 +28,6 @@ export class Player {
         )
         if (gameObject instanceof Unit || gameObject instanceof Structure) {
             this.selected = gameObject
-            this.gameManager.toggleDebug(gameObject)
             gameObject.select()
         }
     }
@@ -92,6 +91,7 @@ export class Player {
                 this.deselect()
             }
             if (event.key == '`') {
+                console.log('KEY PRESSED')
                 this.gameManager.toggleDebug()
             }
         })

@@ -1,17 +1,19 @@
 import { Vector2 } from '../utils/Vector'
 
 export class GameObject {
+    static id: number = 0
     x: number
     y: number
     size: number
     sprite: HTMLImageElement
-
+    public id: number
     constructor(x: number, y: number, size: number, spriteSrc: string) {
         this.x = x
         this.y = y
         this.size = size
         this.sprite = new Image()
         this.sprite.src = spriteSrc
+        this.id = GameObject.id++
     }
 
     update(_delta: number) {
@@ -44,14 +46,6 @@ export class GameObject {
             ctx.fillStyle = 'blue'
             ctx.fillRect(this.x, this.y, 20, 20)
         }
-    }
-
-    debug(): Record<string, any> {
-        const state: Record<string, any> = {}
-        for (const [key, value] of Object.entries(this)) {
-            state[key] = value
-        }
-        return state
     }
 
     toString() {

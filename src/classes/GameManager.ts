@@ -7,6 +7,9 @@ import { Collector } from './Collector'
 import { Base } from './Base'
 import { UIManager } from './UIManager'
 import { SpriteLoader } from './SpriteLoader'
+import { stringify } from 'flatted'
+import { Debugger } from './Debugger'
+import { Tile } from './Tile'
 
 export class GameManager {
     private canvas: HTMLCanvasElement
@@ -18,12 +21,14 @@ export class GameManager {
     private spriteLoader: SpriteLoader
     grid: Grid | undefined
     debugging: boolean = false
+    private debugger: Debugger
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')!
         this.lastTimeStamp = 0
         this.gameObjects = []
         this.spriteLoader = new SpriteLoader()
+        this.debugger = new Debugger()
     }
 
     public static getInstance(canvas?: HTMLCanvasElement): GameManager {
@@ -129,6 +134,9 @@ export class GameManager {
 
     public addGameObject(gameObject: GameObject) {
         this.gameObjects.push(gameObject)
+        if (!(gameObject instanceof Tile)) {
+            this.debugger.trackObject(gameObject)
+        }
     }
 
     public addGameObjects(gameObjects: GameObject[]) {
@@ -172,21 +180,13 @@ export class GameManager {
 
         // Render game objects
         this.gameObjects.forEach((gameObject) => gameObject.render(this.ctx))
+
+        // Render debugger
+        this.debugger.render(this.debugging)
     }
 
     toggleDebug() {
         this.debugging = !this.debugging
-    }
-
-    debug(gameObject: GameObject) {
-        const debugContainer = document.getElementById('debug-container')
-        if (!debugContainer) return
-
-        // Clear previous debug info
-        debugContainer.innerHTML = ''
-        const debugInfo = gameObject.debug()
-        const objectDebugDiv = document.createElement('div')
-        objectDebugDiv.innerText = `${gameObject.toString()}\n${JSON.stringify(debugInfo, null, 2)}`
-        debugContainer.appendChild(objectDebugDiv)
+        console.log(this.debugging)
     }
 }

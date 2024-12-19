@@ -18,6 +18,8 @@
 
 # Bugs
 
+[ ] Interrupting while collecting still collects
+[ ] A collector got stuck when all resources were depleted, it was at drop off
 [X] If resource depleted while collector moving towards it, collector gets stuck.
 [X] Escape before a unit gets to resource (after clicking resource) makes it stop at the resource
 

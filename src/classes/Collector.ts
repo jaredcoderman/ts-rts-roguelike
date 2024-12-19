@@ -39,7 +39,6 @@ export class Collector extends Unit {
 	}
 
 	resetTarget() {
-		console.log("Collector resetting target");
 		this.targetPosition = null;
 		if(this.moveTarget instanceof Resource && !this.encumbered && this.moveTarget.available) {
 			this.moveTarget.deplete(10);
@@ -47,7 +46,7 @@ export class Collector extends Unit {
 		}
 		if(this.moveTarget instanceof Base && this.encumbered) {
 			this.deposit();
-			let resource =  this.gameManager.findClosestOfType(this, Resource);
+			let resource = this.gameManager.findResource(this);
 			if(resource && resource instanceof Resource) {
 				this.collect(resource);
 			}		

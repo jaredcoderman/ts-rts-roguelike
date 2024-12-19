@@ -59,7 +59,6 @@ export class Unit extends GameObject {
 			this.rotation = this.lookVector.getAngle();
 		} else {
 			// Arrived at the target
-			console.log("Resetting target");
 			this.resetTarget();
 		}	
 	}

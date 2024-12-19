@@ -7,9 +7,16 @@
 [X] Make Structure class
 [X] Make units selectable
 [X] Make Resource class
+[X] Give player resource amount/max resources
+[X] Have them update when collector collects
+[ ] Visual for selected unit1 
+
+
+# Bugs
+[ ] Escape before a unit starts gets to resource (after clicking resource) makes it stop at the resource
 
 # Resource collection
 [X] Selecting a unit, then clickign a resource, starts the collection loop
-    [X] Select unit
-    [X] Select resource
+[X] Select unit
+[X] Select resource
 

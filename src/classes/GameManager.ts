@@ -5,6 +5,7 @@ import { Resource } from "./Resource";
 import { Vector2 } from "../utils/Vector";
 import { Collector } from "./Collector";
 import { Base } from "./Base";
+import { UIManager } from "./UIManager";
 
 export class GameManager {
 	private canvas: HTMLCanvasElement;
@@ -42,7 +43,7 @@ export class GameManager {
 		this.grid.drawGrid();
 
 		// Make units
-		//
+		
 	//	let g = new GameObject(400, 500, 20, "/Tiles/collector.png");
 		let u = new Collector(300, 500, 20, 60, "Tiles/collector.png", 3);
 		let u2 = new Collector(200, 200, 20, 60, "Tiles/collector.png", 3);
@@ -55,6 +56,10 @@ export class GameManager {
 		let r5 = new Resource(440, 560, 20, "Tiles/resource.png", 21);
 		let r6 = new Resource(420, 540, 20, "Tiles/resource.png", 22);
 		this.addGameObjects([u, u2, b, r, r2, r3, r4, r5, r6]);
+	
+		// Init UI
+		UIManager.getInstance();
+
 		// Init player
 		Player.getInstance();
 		
@@ -125,7 +130,7 @@ export class GameManager {
 	private render() {
 		// Clear the canvas
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.ctx.fillStyle = '#D2B48C';
+		this.ctx.fillStyle = '#2aa18d';
 		this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);	
 			
 		// Render game objects

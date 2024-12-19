@@ -1,6 +1,7 @@
 import { Base } from "./Base";
 import { GameManager } from "./GameManager";
 import { GameObject } from "./GameObject";
+import { Player } from "./Player";
 import { Resource } from "./Resource";
 import { Unit } from "./Unit";
 
@@ -10,6 +11,7 @@ export class Collector extends Unit {
 	encumbered: boolean = false;
 	collecting: boolean = false;
 	gameManager: GameManager;
+	collectAmount: number = 1;
 
 	constructor(x: number, y: number, size: number, speed: number, spriteSrc: string, collectionTime: number) {
 		super(x, y, size, speed, spriteSrc);
@@ -29,6 +31,11 @@ export class Collector extends Unit {
 		this.targetPosition = null;
 	}
 
+	deposit() {
+		this.encumbered = false;	
+		Player.getInstance().addResources(this.collectAmount);
+	}
+
 	resetTarget() {
 		this.targetPosition = null;
 		if(this.moveTarget instanceof Resource && !this.encumbered) {
@@ -36,13 +43,11 @@ export class Collector extends Unit {
 			this.encumbered = true;
 		}
 		if(this.moveTarget instanceof Base && this.encumbered) {
-			console.log("+1 Resource!");
-			this.encumbered = false;
-			
+			this.deposit();
 			let resource =  this.gameManager.findClosestOfType(this, Resource);
 			if(resource && resource instanceof Resource) {
 				this.collect(resource);
-			}
+			}		
 		}
 	}
 	update(delta: number) {

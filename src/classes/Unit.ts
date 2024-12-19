@@ -8,7 +8,8 @@ export class Unit extends GameObject {
 	lookVector: Vector2;
 	rotation: number;
 	targetPosition: Vector2 | null;
-		
+	selected: boolean = false;		
+
 	constructor(x: number, y: number, size: number, speed: number, spriteSrc: string) {
 		super(x, y, size, spriteSrc);
 		this.speed = speed;
@@ -23,11 +24,11 @@ export class Unit extends GameObject {
 	}
 	
 	select() {
-		console.log("selecting! CHANGE THIS");
+		this.selected = true;
 	}
 
 	deselect() {
-		console.log("deselecting! CHANGE THIS");
+		this.selected = false;
 	}
 
 	setTargetPosition(position: Vector2) {
@@ -70,7 +71,17 @@ export class Unit extends GameObject {
     	// Move the canvas origin to the center of the unit
     	const centerX = this.x + this.size / 2;
     	const centerY = this.y + this.size / 2;
-    	ctx.translate(centerX, centerY);
+   
+		if(this.selected) {
+			ctx.beginPath();
+    		ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI); // Circle outline
+    		ctx.lineWidth = 2; // Set the border width
+    		ctx.strokeStyle = "#40ffdf"; // Set the border color
+			ctx.stroke();
+		}
+
+
+		ctx.translate(centerX, centerY);
 
     	// Calculate rotation based on the lookVector
     	const angle = Math.atan2(this.lookVector.y, this.lookVector.x);
@@ -83,7 +94,7 @@ export class Unit extends GameObject {
 			throw new Error("Sprite not complete");
 		}
 	
-    	// Restore the context state
+ 		// Restore the context state
     	ctx.restore();
 	}
 

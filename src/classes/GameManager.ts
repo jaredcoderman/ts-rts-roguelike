@@ -6,6 +6,7 @@ import { Vector2 } from "../utils/Vector";
 import { Collector } from "./Collector";
 import { Base } from "./Base";
 import { UIManager } from "./UIManager";
+import { SpriteLoader } from "./SpriteLoader";
 
 export class GameManager {
 	private canvas: HTMLCanvasElement;
@@ -14,12 +15,14 @@ export class GameManager {
 	private lastTimeStamp: number;
 	public static instance: GameManager;
 	private cellSize: number = 20;
+	private spriteLoader: SpriteLoader;
 	grid: Grid | undefined;
 	constructor(canvas: HTMLCanvasElement) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d")!;
 		this.lastTimeStamp = 0;
 		this.gameObjects = [];
+		this.spriteLoader = new SpriteLoader();
 	}
 
 	public static getInstance(canvas?: HTMLCanvasElement): GameManager {
@@ -32,7 +35,7 @@ export class GameManager {
 		return GameManager.instance;
 	}	
 
-	public init() {
+	public async init() {
 		// Set the size
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight
@@ -42,9 +45,16 @@ export class GameManager {
 		this.grid = new Grid(rows, cols, this.cellSize);	
 		this.grid.drawGrid();
 
+		// Load sprites
+		const spriteUrls = [
+			"Tiles/collector.png",
+			"Tiles/base.png",
+			"Tiles/resource.png"
+		];
+
+		await this.spriteLoader.loadSprites(spriteUrls);
+
 		// Make units
-		
-	//	let g = new GameObject(400, 500, 20, "/Tiles/collector.png");
 		let u = new Collector(300, 500, 20, 60, "Tiles/collector.png", 3);
 		let u2 = new Collector(200, 200, 20, 60, "Tiles/collector.png", 3);
 		let b = new Base(80, 80, 40, "Tiles/base.png", 100);

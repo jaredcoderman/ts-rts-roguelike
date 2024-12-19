@@ -37,6 +37,7 @@ export class Collector extends Unit {
 	}
 
 	resetTarget() {
+		console.log("Collector resetting target");
 		this.targetPosition = null;
 		if(this.moveTarget instanceof Resource && !this.encumbered) {
 			this.moveTarget.deplete(1);

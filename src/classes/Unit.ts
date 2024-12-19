@@ -59,6 +59,7 @@ export class Unit extends GameObject {
 			this.rotation = this.lookVector.getAngle();
 		} else {
 			// Arrived at the target
+			console.log("Resetting target");
 			this.resetTarget();
 		}	
 	}
@@ -72,6 +73,7 @@ export class Unit extends GameObject {
     	const centerX = this.x + this.size / 2;
     	const centerY = this.y + this.size / 2;
    
+		// Selected UI
 		if(this.selected) {
 			ctx.beginPath();
     		ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI); // Circle outline

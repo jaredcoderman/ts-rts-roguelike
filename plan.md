@@ -9,7 +9,7 @@
 [X] Make Resource class
 [X] Give player resource amount/max resources
 [X] Have them update when collector collects
-[ ] Visual for selected unit1 
+[X] Visual for selected unit1 
 
 
 # Bugs

@@ -3,6 +3,7 @@ import { Structure } from './Structure'
 export class Resource extends Structure {
     available: boolean = true
     refreshTimeSeconds: number
+	beingExtracted: boolean = false
 
     constructor(
         x: number,

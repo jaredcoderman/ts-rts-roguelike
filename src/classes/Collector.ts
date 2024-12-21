@@ -13,7 +13,8 @@ export class Collector extends Unit {
 	gameManager: GameManager
 	collectAmount: number = 1
 	bob: string = 'hi'
-	looping: boolean = false
+	debugText: string = ''
+	extracting: boolean = false
 	constructor(
 		x: number,
 		y: number,
@@ -26,9 +27,21 @@ export class Collector extends Unit {
 		this.collectionTimeSeconds = collectionTimeSeconds * 1000
 		this.moveTarget = null
 		this.gameManager = GameManager.getInstance()
+		this.updateDebugText()
 	}
 
-	collect(resource: Resource) {
+	updateDebugText() {
+		this.debugText = `
+			Encumbered: ${this.encumbered}
+			Collecting: ${this.collecting}
+			MoveTarget: ${this.moveTarget != null}
+			TargetPosition: ${this.targetPosition}
+			Extracting: ${this.extracting}
+		`
+	}
+
+	// to make tryMoveToNode run in update()
+	moveToCollect(resource: Resource) {
 		this.collecting = true
 		this.moveTarget = resource
 	}
@@ -48,9 +61,10 @@ export class Collector extends Unit {
 
 	collectNextResource() {
 		this.moveTarget = null
+		this.targetPosition = null
 		let resource = this.gameManager.findResource(this)
-		if (resource && resource instanceof Resource) {
-			this.collect(resource)
+		if (resource && resource instanceof Resource && resource.available) {
+			this.moveToCollect(resource)
 		}
 	}
 
@@ -59,18 +73,14 @@ export class Collector extends Unit {
 		if (
 			this.moveTarget instanceof Resource &&
 			!this.encumbered &&
-			this.moveTarget.available
+			this.moveTarget.available &&
+			!this.extracting &&
+			!this.moveTarget.beingExtracted
 		) {
-			if (this.looping) {
-				return
-			}
-			const target = this.moveTarget
-			this.looping = true
-			let collectionTime = Math.floor(this.collectionTimeSeconds / 1000)
-
-			console.log(collectionTime)
+			let collectionTime = Math.floor(this.collectionTimeSeconds / 50)
 			let currentTime = 0
-
+			this.extracting = true
+			this.moveTarget.beingExtracted = true
 			const interval = setInterval(() => {
 				if (
 					this.moveTarget instanceof Resource &&
@@ -78,17 +88,22 @@ export class Collector extends Unit {
 					currentTime < collectionTime
 				) {
 					currentTime++
+
 					if (currentTime === collectionTime) {
-						target.deplete(5)
+						this.moveTarget.deplete(20)
 						this.encumbered = true
+						this.extracting = false
+						this.moveTarget.beingExtracted = false
 						clearInterval(interval) // Stop the interval
 					}
 				} else {
-					console.log('Breaking loop')
-					this.looping = false
+					this.extracting = false
+					if (this.moveTarget instanceof Resource) {
+						this.moveTarget.beingExtracted = false
+					}
 					clearInterval(interval) // Stop the interval
 				}
-			}, 1000)
+			}, 50)
 		}
 	}
 
@@ -100,20 +115,27 @@ export class Collector extends Unit {
 	}
 
 	determineNextAction() {
-		this.targetPosition = null
+		if (this.extracting) {
+			return
+		}
 
+		this.targetPosition = null
 		this.tryExtract()
 		this.tryDeposit()
 	}
 
 	tryMoveToNode() {
-		if (!this.encumbered && this.moveTarget) {
+		if (!this.encumbered && this.moveTarget && !this.extracting) {
 			// If resource is depleted while moving towards it find new one, otherwise
 			// move towards it.
 			if (
 				this.moveTarget instanceof Resource &&
-				!this.moveTarget.available
+				(!this.moveTarget.available || this.moveTarget.beingExtracted)
 			) {
+				console.log(`
+					available: ${this.moveTarget.available}\n
+					beingExtracted: ${this.moveTarget.beingExtracted}
+				`)
 				this.determineNextAction()
 				this.collectNextResource()
 			} else {
@@ -150,10 +172,13 @@ export class Collector extends Unit {
 	}
 
 	update(delta: number) {
+		this.updateDebugText()
+
+		// Action logic
 		if (this.collecting) {
+			this.tryFindNode()
 			this.tryMoveToNode()
 			this.tryFindBase()
-			this.tryFindNode()
 		}
 		this.tryMove(delta)
 	}

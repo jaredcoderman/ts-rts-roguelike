@@ -40,6 +40,7 @@ export class Unit extends GameObject {
 		this.targetPosition = position
 	}
 
+	// Overridden by subsses
 	determineNextAction() {
 		this.targetPosition = null
 	}

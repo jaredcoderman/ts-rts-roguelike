@@ -40,7 +40,7 @@ export class Unit extends GameObject {
 		this.targetPosition = position
 	}
 
-	resetTarget() {
+	determineNextAction() {
 		this.targetPosition = null
 	}
 
@@ -65,7 +65,7 @@ export class Unit extends GameObject {
 			this.rotation = this.lookVector.getAngle()
 		} else {
 			// Arrived at the target
-			this.resetTarget()
+			this.determineNextAction()
 		}
 	}
 

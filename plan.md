@@ -12,7 +12,7 @@
 [X] Visual for selected unit1
 [X] Collectors find new node after one is depleted
 [X] Make resources regenerate
-[ ] Collectors takes collectionTime to collect
+[X] Collectors takes collectionTime to collect
 [ ] Bases have units
 [ ] Player can spawn units at a base for resource
 

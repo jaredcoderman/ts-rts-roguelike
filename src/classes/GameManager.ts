@@ -7,7 +7,6 @@ import { Collector } from './Collector'
 import { Base } from './Base'
 import { UIManager } from './UIManager'
 import { SpriteLoader } from './SpriteLoader'
-import { stringify } from 'flatted'
 import { Debugger } from './Debugger'
 import { Tile } from './Tile'
 
@@ -68,12 +67,12 @@ export class GameManager {
         let u3 = new Collector(210, 210, 20, 100, 'Tiles/collector.png', 3)
         let b = new Base(80, 80, 40, 'Tiles/base.png', 100)
 
-        let r = new Resource(400, 500, 20, 'Tiles/resource.png', 20, 35)
-        let r2 = new Resource(400, 520, 20, 'Tiles/resource.png', 20, 35)
-        let r3 = new Resource(420, 500, 20, 'Tiles/resource.png', 20, 35)
-        let r4 = new Resource(400, 540, 20, 'Tiles/resource.png', 20, 35)
-        let r5 = new Resource(440, 560, 20, 'Tiles/resource.png', 20, 35)
-        let r6 = new Resource(420, 540, 20, 'Tiles/resource.png', 20, 35)
+        let r = new Resource(400, 500, 20, 'Tiles/resource.png', 20, 20)
+        let r2 = new Resource(400, 520, 20, 'Tiles/resource.png', 20, 20)
+        let r3 = new Resource(420, 500, 20, 'Tiles/resource.png', 20, 20)
+        let r4 = new Resource(400, 540, 20, 'Tiles/resource.png', 20, 20)
+        let r5 = new Resource(440, 560, 20, 'Tiles/resource.png', 20, 20)
+        let r6 = new Resource(420, 540, 20, 'Tiles/resource.png', 20, 20)
         this.addGameObjects([u, u2, u3, b, r, r2, r3, r4, r5, r6])
 
         // Init UI

@@ -6,6 +6,7 @@ import { Resource } from './Resource'
 import { Unit } from './Unit'
 
 export class Collector extends Unit {
+	static isCollector: boolean = true
 	collectionTimeSeconds: number
 	moveTarget: GameObject | null
 	encumbered: boolean = false
@@ -15,6 +16,7 @@ export class Collector extends Unit {
 	bob: string = 'hi'
 	debugText: string = ''
 	extracting: boolean = false
+	static cost: number = 5
 	constructor(
 		x: number,
 		y: number,
@@ -90,7 +92,7 @@ export class Collector extends Unit {
 					currentTime++
 
 					if (currentTime === collectionTime) {
-						this.moveTarget.deplete(20)
+						this.moveTarget.deplete(this.collectAmount)
 						this.encumbered = true
 						this.extracting = false
 						this.moveTarget.beingExtracted = false
@@ -132,10 +134,6 @@ export class Collector extends Unit {
 				this.moveTarget instanceof Resource &&
 				(!this.moveTarget.available || this.moveTarget.beingExtracted)
 			) {
-				console.log(`
-					available: ${this.moveTarget.available}\n
-					beingExtracted: ${this.moveTarget.beingExtracted}
-				`)
 				this.determineNextAction()
 				this.collectNextResource()
 			} else {

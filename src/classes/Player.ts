@@ -1,10 +1,10 @@
 import { Vector2 } from '../utils/Vector'
+import { Base } from './Base'
 import { Collector } from './Collector'
 import { GameManager } from './GameManager'
 import { GameObject } from './GameObject'
 
 import { Structure } from './Structure'
-import { Tile } from './Tile'
 import { UIManager } from './UIManager'
 import { Unit } from './Unit'
 
@@ -23,9 +23,8 @@ export class Player {
 
 	select(point: Vector2) {
 		let gameObjects = this.gameManager.getGameObjects()
-		let gameObject = gameObjects.find(
-			(gameObject) =>
-				gameObject.containsPoint(point) && !(gameObject instanceof Tile)
+		let gameObject = gameObjects.find((gameObject) =>
+			gameObject.containsPoint(point)
 		)
 		if (gameObject instanceof Unit || gameObject instanceof Structure) {
 			this.selected = gameObject
@@ -38,6 +37,18 @@ export class Player {
 			this.resources += amount
 		} else {
 			this.resources = this.maxResources
+		}
+		UIManager.getInstance().updateComponentText(
+			'resource-text',
+			`${this.resources}/${this.maxResources}`
+		)
+	}
+
+	depleteResources(amount: number) {
+		if (this.resources - amount >= 0) {
+			this.resources -= amount
+		} else {
+			this.resources = 0
 		}
 		UIManager.getInstance().updateComponentText(
 			'resource-text',
@@ -64,13 +75,22 @@ export class Player {
 				this.deselect()
 			} else {
 				if (this.selected.collecting) {
-					console.log('Stopping collection')
 					this.selected.stopCollecting()
 				}
 				this.selected.setTargetPosition(point)
 			}
 		} else if (this.selected instanceof Unit) {
 			this.selected.setTargetPosition(point)
+		}
+	}
+
+	tryMakeCollector() {
+		if (this.selected instanceof Base && this.resources >= Collector.cost) {
+			let madeCollector = this.selected.makeUnit(Collector)
+			if (madeCollector) {
+				this.maxResources += 8
+				this.depleteResources(Collector.cost)
+			}
 		}
 	}
 
@@ -93,8 +113,10 @@ export class Player {
 				this.deselect()
 			}
 			if (event.key == '`') {
-				console.log('KEY PRESSED')
 				this.gameManager.toggleDebug()
+			}
+			if (event.key == 'q') {
+				this.tryMakeCollector()
 			}
 		})
 	}

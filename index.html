@@ -12,18 +12,15 @@
             <img src="/Tiles/resource.png" width="20" height="20" />
             <span id="resource-text">0/16</span>
         </div>
-        <div
-            id="debug-container"
-            style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                background: rgba(0, 0, 0, 0.7);
-                color: white;
-                padding: 10px;
-                font-family: monospace;
-            "
-        ></div>
+        <div id="debug-container"></div>
+        <div id="unit-make-container">
+            <div class="unit-button" data-unit-type="Collector">
+                <p>Collector</p>
+                <img class="unit-image" src="/Tiles/collector.png" />
+                <span class="hotkey">Q</span>
+                <span>10</span>
+            </div>
+        </div>
         <script type="module" src="/src/main.ts"></script>
     </body>
 </html>

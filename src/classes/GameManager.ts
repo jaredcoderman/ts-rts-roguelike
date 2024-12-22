@@ -1,5 +1,4 @@
 import { GameObject } from './GameObject'
-import { Grid } from './Grid'
 import { Player } from './Player'
 import { Resource } from './Resource'
 import { Vector2 } from '../utils/Vector'
@@ -8,7 +7,6 @@ import { Base } from './Base'
 import { UIManager } from './UIManager'
 import { SpriteLoader } from './SpriteLoader'
 import { Debugger } from './Debugger'
-import { Tile } from './Tile'
 
 export class GameManager {
 	private canvas: HTMLCanvasElement
@@ -16,9 +14,7 @@ export class GameManager {
 	private gameObjects: GameObject[]
 	private lastTimeStamp: number
 	public static instance: GameManager
-	private cellSize: number = 20
 	private spriteLoader: SpriteLoader
-	grid: Grid | undefined
 	debugging: boolean = false
 	private debugger: Debugger
 	constructor(canvas: HTMLCanvasElement) {
@@ -46,11 +42,6 @@ export class GameManager {
 		// Set the size
 		this.canvas.width = window.innerWidth
 		this.canvas.height = window.innerHeight
-		// Create the grid
-		let rows = Math.floor(this.canvas.width / this.cellSize)
-		let cols = Math.floor(this.canvas.height / this.cellSize)
-		this.grid = new Grid(rows, cols, this.cellSize)
-		this.grid.drawGrid()
 
 		// Load sprites
 		const spriteUrls = [
@@ -73,7 +64,29 @@ export class GameManager {
 		let r4 = new Resource(400, 540, 20, 'Tiles/resource.png', 20, 15)
 		let r5 = new Resource(440, 560, 20, 'Tiles/resource.png', 20, 15)
 		let r6 = new Resource(420, 540, 20, 'Tiles/resource.png', 20, 15)
-		this.addGameObjects([u, u2, u3, b, r, r2, r3, r4, r5, r6])
+
+		let r7 = new Resource(420, 560, 20, 'Tiles/resource.png', 20, 15)
+		let r8 = new Resource(460, 540, 20, 'Tiles/resource.png', 20, 15)
+		let r9 = new Resource(460, 560, 20, 'Tiles/resource.png', 20, 15)
+		let r10 = new Resource(460, 520, 20, 'Tiles/resource.png', 20, 15)
+		let r11 = new Resource(460, 500, 20, 'Tiles/resource.png', 20, 15)
+		this.addGameObjects([
+			u,
+			u2,
+			u3,
+			b,
+			r,
+			r2,
+			r3,
+			r4,
+			r5,
+			r6,
+			r7,
+			r8,
+			r9,
+			r10,
+			r11,
+		])
 
 		// Init UI
 		UIManager.getInstance()
@@ -133,9 +146,7 @@ export class GameManager {
 
 	public addGameObject(gameObject: GameObject) {
 		this.gameObjects.push(gameObject)
-		if (!(gameObject instanceof Tile)) {
-			this.debugger.trackObject(gameObject)
-		}
+		this.debugger.trackObject(gameObject)
 	}
 
 	public addGameObjects(gameObjects: GameObject[]) {

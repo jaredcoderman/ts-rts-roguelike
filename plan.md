@@ -18,13 +18,15 @@
 
 # Bugs
 
+[ ] Selecting bases is not good
 [X] Interrupting while collecting still collects
 [ ] A collector got stuck when all resources were depleted, it was at drop off
 [X] If resource depleted while collector moving towards it, collector gets stuck.
 [X] Escape before a unit gets to resource (after clicking resource) makes it stop at the resource
 
-# Resource collection
+# Bases
 
-[X] Selecting a unit, then clicking a resource, starts the collection loop
-[X] Select unit
-[X] Select resource
+[ ] Clicking on base shows UI to make unit
+[ ] Bases can add, remove, get units
+[ ] Bases can create a unit for resource cost
+[ ] Bases have a max number of units
